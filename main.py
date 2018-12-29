@@ -1,3 +1,5 @@
+# !/usr/bin/python3
+
 # -*- coding: utf-8 -*-
 import re
 
@@ -8,7 +10,8 @@ table = {'intencje': {'(^[PWŚCS].*)': {'left': '<span style="font-weight: bold"
          '(^\d+.\d+)': {'left': '<br><br><span style="font-weight: bold">', 'right': '</span><br>'}},
          'ogloszenia': {'(^\d+\.\D)': {'left': '<br><br>', 'right': ''}}}
 
-split_file_array = {'ogloszenia': ('^\s*1\.\s*', '^\s*INTENCJE\s*'), 'intencje': ('^\s*Poniedziałek\s*', 'OGŁOSZENIA\s*')}
+split_file_array = {'ogloszenia': ('^\s*1\.\s*', '^\s*INTENCJE\s*'), 'intencje': ('^\s*Poniedziałek\s*', '^\s*OGŁOSZENIA\s*')}
+
 code = {'intencje': '<head><meta charset="UTF-8"></head><body><div style="text-align: center; '
         'font-weight: normal; font-family: Cambria;">', 'ogloszenia': '<head><meta charset="UTF-8">'
         '</head><body><div style="text-align: left; font-weight: normal; font-family: Cambria;">'}
@@ -25,7 +28,11 @@ def read_file():
 def split_file(s):
     for pattern in split_file_array:
         index_begin = re.search(split_file_array[pattern][0], s, re.M).start()
-        index_end = re.search(split_file_array[pattern][1], s, re.M).start()
+        index_end = re.search(split_file_array[pattern][1], s, re.M)
+        if not index_end:
+            index_end = 0
+        else:
+            index_end = re.search(split_file_array[pattern][1], s, re.M).start()
         if index_begin > index_end: index_end = len(s)
         part = s[index_begin: index_end]
         split_file_array[pattern] = part
