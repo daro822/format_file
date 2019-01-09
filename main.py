@@ -3,14 +3,17 @@
 # -*- coding: utf-8 -*-
 import re
 
-table = {'intencje': {'(^[PWŚCS].*)': {'left': '<span style="font-weight: bold"><hr style="width: 100%; height: 2px; margin-top: 50px">',
+table = {'intencje': {'(^[PWŚCS].*)': {'left': '<span style="font-weight: bold">'
+        '<hr style="width: 100%; height: 2px; margin-top: 50px">',
         'right':'<hr style="width: 100%; height: 2px;"></span>'}, '(^N.*)': {'left': '<span style="font-weight: bold'
         '; color: red"><hr style="width: 100%; height: 2px; margin-top: 50px">',
         'right':'<hr style="width: 100%; height: 2px;"></span>'},
-         '(^\d+.\d+)': {'left': '<br><br><span style="font-weight: bold">', 'right': '</span><br>'}},
+         '(^\d+.\d+)': {'left': '<br><br><span style="font-weight: bold">', 'right': '</span><br>'},
+        '^(\+|-)': {'left': '<br>', 'right': ''}},
          'ogloszenia': {'(^\d+\.\D)': {'left': '<br><br>', 'right': ''}}}
 
-split_file_array = {'ogloszenia': ('^\s*1\.\s*', '^\s*INTENCJE\s*'), 'intencje': ('^\s*Poniedziałek\s*', '^\s*OGŁOSZENIA\s*')}
+split_file_array = {'ogloszenia': ('^\s*1\.\s*', '^\s*INTENCJE\s*'),
+                    'intencje': ('^\s*Poniedziałek\s*', '^\s*OGŁOSZENIA\s*')}
 
 code = {'intencje': '<head><meta charset="UTF-8"></head><body><div style="text-align: center; '
         'font-weight: normal; font-family: Cambria;">', 'ogloszenia': '<head><meta charset="UTF-8">'
@@ -49,7 +52,7 @@ def format_parts(split_file_array):
 
 def create_files(split_file_array):
     for name, string in split_file_array.items():
-        file_to_write = open(name+'.html', 'w')
+        file_to_write = open(f"{name}.html", 'w')
         file_to_write.write(code[name])
         file_to_write.write(string)
         file_to_write.write('</body>')
@@ -57,3 +60,4 @@ def create_files(split_file_array):
 
 if __name__ == "__main__":
     run()
+
