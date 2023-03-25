@@ -1,2 +1,2 @@
 # format_file
-Sformatowanie pliku txt i utwórzenie dwóch nowych w .html
+formatowanie pliku txt, ostylowanie go kodem html i utworzenie dwóch nowych plików w .html 
